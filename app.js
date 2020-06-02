@@ -1,8 +1,20 @@
 var faker = require('faker')
+var mysql = require('mysql')
 
+var connection = mysql.createConnection({
+    host : 'localhost',
+    user : 'root',
+    password : process.env.MYSQL_PW,
+    database : 'join_us'
+});
 
+var q = 'SELECT COUNT(*) AS total FROM users' 
 
-for(var i=0;i<5;i++){
-    var address = faker.address.streetAddress() + ", " + faker.address.city() + ", " + faker.address.state();
-    console.log(address)
-}
+connection.query(q,function(error,results,fileds){
+    if(error) 
+        console.log(error)
+    else
+        console.log(results[0].total)
+});
+
+connection.end();
