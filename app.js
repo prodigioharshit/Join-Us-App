@@ -8,13 +8,38 @@ var connection = mysql.createConnection({
     database : 'join_us'
 });
 
-var q = 'SELECT COUNT(*) AS total FROM users' 
+// SELECTING DATA......
+// var q = 'SELECT COUNT(*) AS total FROM users' 
 
-connection.query(q,function(error,results,fileds){
-    if(error) 
-        console.log(error)
+// connection.query(q,function(error,results,fileds){
+//     if(error) 
+//         console.log(error)
+//     else
+//         console.log(results[0].total)
+// });
+
+// INSERTING DATA.....
+// var q = "INSERT INTO users(email) VALUES ('natasha@avengers.com')" 
+
+// connection.query(q,function(error,results,fileds){
+//     if(error) 
+//         console.log(error)
+//     else
+//         console.log(results)
+// });
+
+// INSERT DATA dynamically...
+var person = {
+                email : faker.internet.email()
+             };
+
+connection.query("INSERT INTO users SET ?",person,function(err,results){
+    if(err)
+        console.log(err)
     else
-        console.log(results[0].total)
+        console.log(results)
 });
 
 connection.end();
+
+
