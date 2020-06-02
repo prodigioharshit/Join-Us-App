@@ -30,15 +30,20 @@ var connection = mysql.createConnection({
 
 // INSERT DATA dynamically...
 var person = {
-                email : faker.internet.email()
+                email : faker.internet.email(),
+                created_at : faker.date.past()
              };
 
-connection.query("INSERT INTO users SET ?",person,function(err,results){
+
+var end_result = connection.query("INSERT INTO users SET ?",person,function(err,results){
     if(err)
         console.log(err)
     else
         console.log(results)
 });
+
+console.log(end_result.sql);
+
 
 connection.end();
 
