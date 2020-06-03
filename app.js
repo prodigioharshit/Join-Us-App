@@ -29,21 +29,39 @@ var connection = mysql.createConnection({
 // });
 
 // INSERT DATA dynamically...
-var person = {
-                email : faker.internet.email(),
-                created_at : faker.date.past()
-             };
+// var person = {
+//                 email : faker.internet.email(),
+//                 created_at : faker.date.past()
+//              };
 
 
-var end_result = connection.query("INSERT INTO users SET ?",person,function(err,results){
-    if(err)
-        console.log(err)
+// var end_result = connection.query("INSERT INTO users SET ?",person,function(err,results){
+//     if(err)
+//         console.log(err)
+//     else
+//         console.log(results)
+// });
+
+// INSERTING LOTS OF DATA =================
+
+var data = []
+
+for(var i=1;i<=500;i++){
+    data.push([faker.internet.email(),
+               faker.date.past()
+              ]);
+}
+
+var q = 'INSERT INTO users(email,created_at) VALUES ?'
+
+var end_result = connection.query(q,[data],function(err,results){
+     if(err)
+         console.log(err)
     else
         console.log(results)
 });
 
 console.log(end_result.sql);
-
 
 connection.end();
 
